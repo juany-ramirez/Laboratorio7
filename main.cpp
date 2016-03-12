@@ -1,11 +1,12 @@
+
+#include "racional.h"
 #include <iostream>
 #include <vector>
 #include <ctime>
 #include <cstdlib>
 #include <sstream>
-#include "racional.h"
 #include <string>
-#include <cstdlib>
+#include <stdlib.h>
 
 using std::string;
 using std::stringstream;
@@ -15,10 +16,10 @@ using std::endl;
 using std::vector;
 using std::cin;
 using std::cout;
+using std::ostream;
 
 void imprimirMenu();
-void eliminarVector(vector<Racional*>);
-void imprimirLista(vector<Racional*>);
+void imprimirLista(vector<Racional>);
 
 int main(int argc, char const *argv[]){
 	
@@ -33,7 +34,7 @@ int main(int argc, char const *argv[]){
 	cout << "La suma de " << a << " y " << d << " es: " << a + d << endl;
 */
 	vector<string> historial;
-	vector<Racional*> lista;
+	vector<Racional> lista;
 	int opcionMenu;
 /*
 	lista.push_back(a);
@@ -52,9 +53,8 @@ int main(int argc, char const *argv[]){
             cin >> numerador;
             cout<< "Ingrese el denominador: ";
             cin >> denominador;
-            lista.push_back(new Racional(numerador,denominador));
+            lista.push_back(Racional(numerador,denominador));
         }
-/*
         else if(opcionMenu == 2){
         	imprimirLista(lista);
         	cout<< "Ingrese el primer racional: ";
@@ -63,11 +63,11 @@ int main(int argc, char const *argv[]){
             cin >> opRacional2;
             
             ss<<1<<opRacional1<<opRacional2;
-            historial.push_back(ss);
+            historial.push_back(ss.str());
             ss.str("");
 			
             cout<< lista[opRacional1] << " + " << lista[opRacional2] << " = "; 
-            cout<< lista[opRacional1]+= lista[opRacional2]; 
+            cout<< lista[opRacional1]+lista[opRacional2]; 
             cout<< endl;
         }else if(opcionMenu == 3){
         	imprimirLista(lista);
@@ -77,11 +77,11 @@ int main(int argc, char const *argv[]){
             cin >> opRacional2;
 
             ss<<2<<opRacional1<<opRacional2;
-            historial.push_back(ss);
+            historial.push_back(ss.str());
             ss.str("");
 			
             cout<< lista[opRacional1] << " - " << lista[opRacional2] << " = "; 
-            cout<< (lista[opRacional1]-= lista[opRacional2)]; 
+            cout<< (lista[opRacional1]-lista[opRacional2]); 
             cout<< endl;
 
         }else if(opcionMenu == 4){
@@ -92,12 +92,12 @@ int main(int argc, char const *argv[]){
             cin >> opRacional2;	
            
             ss<<3<<opRacional1<<opRacional2;
-            historial.push_back(ss);
+            historial.push_back(ss.str());
             ss.str("");
 			
 
             cout<< lista[opRacional1] << " * " << lista[opRacional2] << " = "; 
-            cout<< (lista[opRacional1]*=lista[opRacional2]); 
+            cout<< (lista[opRacional1]*lista[opRacional2]); 
             cout<< endl;
 
 
@@ -109,11 +109,13 @@ int main(int argc, char const *argv[]){
             cin >> opRacional2;
 
             ss<<4<<opRacional1<<opRacional2;
-            historial.push_back(ss);
+            historial.push_back(ss.str());
             ss.str("");
-			
+			if(lista[opRacional1].getNum() == 0){
+                cout<< "Error";
+            }else
             cout<< lista[opRacional1] << " / " << lista[opRacional2] << " = ";
-            cout << (lista[opRacional1]/= lista[opRacional2)];
+            cout << (lista[opRacional1]/ lista[opRacional2]);
             cout<< endl;
         }else if(opcionMenu == 6){
         	cout<< "---------------------historial---------------------"<< endl;
@@ -121,42 +123,40 @@ int main(int argc, char const *argv[]){
 				cout << i+1 << ". ";
 				
 				if((historial.at(i))[0] == '1'){
-					pos1 = atoi((historial.at(i))[1]);
-					pos2 = atoi((historial.at(i))[2]);
-					cout<< lista[pos1] << " + " << lista[pos2] << " = " << lista[pos1]+= lista[pos2] << endl;
+					pos1 = (historial.at(i))[1]-'0';
+					pos2 = (historial.at(i))[2]-'0';
+					cout<< lista[pos1] << " + " << lista[pos2] << " = " << (lista[pos1]+ lista[pos2]).toString()<< endl;
 				}
 				if((historial.at(i))[0] == '2'){
-					pos1 = atoi((historial.at(i))[1]);
-					pos2 = atoi((historial.at(i))[2]);
-					cout<< lista[pos1] << " - " << lista[pos2] << " = " << lista[pos1]-= lista[pos2] << endl;
+					pos1 = (historial.at(i))[1]-'0';
+					pos2 = (historial.at(i))[2]-'0';
+					cout<< lista[pos1] << " - " << lista[pos2] << " = " << (lista[pos1]- lista[pos2]).toString()<< endl;
 				}
 				if((historial.at(i))[0] == '3'){
-					pos1 = atoi((historial.at(i))[1]);
-					pos2 = atoi((historial.at(i))[2]);
-					cout<< lista[pos1] << " * " << lista[pos2] << " = " << lista[pos1]*= lista[pos2] << endl;
+					pos1 = (historial.at(i))[1]-'0';
+					pos2 = (historial.at(i))[2]-'0';
+					cout<< lista[pos1] << " * " << lista[pos2] << " = " << (lista[pos1]* lista[pos2]).toString()<< endl;
 				}
 				if((historial.at(i))[0] == '4'){
-					pos1 = atoi((historial.at(i))[1]);
-					pos2 = atoi((historial.at(i))[2]);
-					cout<< lista[pos1] << " / " << lista[pos2] << " = " << lista[pos1]/= lista[pos2] << endl;
+					pos1 = (historial.at(i))[1]-'0';
+					pos2 = (historial.at(i))[2]-'0';
+					cout<< lista[pos1] << " / " << lista[pos2] << " = " << (lista[pos1]/ lista[pos2]).toString()<< endl;
 				}
 			}
-
         }
-        */if(opcionMenu == 7){
+        if(opcionMenu == 7){
         	imprimirLista(lista);
 
         }
  	}while(opcionMenu!=8);
-	eliminarVector(lista);
 	return 0;
 }
 
-void imprimirLista(vector<Racional*> arreglo){
+void imprimirLista(vector<Racional> arreglo){
 	cout<< "---------------------RACIONALES---------------------"<< endl;
 	for (int i = 0; i < arreglo.size(); ++i){
 		cout << i << ". ";
-		cout << arreglo.at(i) -> toString();
+		cout << arreglo.at(i).toString();
 		cout << endl;
 	}
 }
@@ -174,13 +174,4 @@ void imprimirMenu(){
     cout<< "8. Salir"<<endl;
 
 }
-
-void eliminarVector(vector<Racional*> arreglo){
-	for(int i=0;i<arreglo.size();i++){
-        delete arreglo.at(i);
-    }
-	return;
-} 
-
-
 

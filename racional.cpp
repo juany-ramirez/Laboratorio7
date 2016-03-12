@@ -11,12 +11,15 @@ using std::showpos;
 using std::noshowpos;
 
 Racional::Racional(int num, int den){
-	if(den<0){
-		num *= -1;
-	}
 	if(den<0 && num<0){
 		den *=-1;
 		num *= -1;
+	}
+	if(den<0){
+		num *= -1;
+	}
+	if(den==0){
+		den =1;
 	}
 	int menor = num;
 	if(menor<den){
@@ -33,13 +36,14 @@ Racional::Racional(int num, int den){
 	
 }
 
+int Racional::getNum() {
+	return num;
+}
+
 string Racional::toString() const{
 	stringstream ss;
-	if(den == 0 || den == 1){
-		if (den == 0)
-			ss << num;
-		if (den == 1)
-			ss << num;
+	if(den == 0 || den == 1 || num ==0){
+		ss << num;
 	}else{
 		ss << " " << num << " / " << den<< " " ;
 	}
@@ -79,7 +83,7 @@ const Racional& Racional::operator*=(const Racional& b){
 }
 
 ostream& operator<<(ostream& output, const Racional& c){
-	if(c.den == 0 || c.den == 1){
+	if(c.den == 0 || c.den == 1 || c.num == 0){
 		if (c.den == 0)
 			output << c.num;
 		if (c.den == 1)
