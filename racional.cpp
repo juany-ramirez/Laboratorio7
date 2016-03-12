@@ -54,6 +54,27 @@ string Racional::toString() const{
 const Racional& Racional::operator=(const Racional& r){
 	num = r.num;
 	den = r.den;
+	if(den<0 && num<0){
+		den *=-1;
+		num *= -1;
+	}
+	if(den<0){
+		num *= -1;
+		den *= -1;
+	}
+	if(den==0){
+		den =1;
+	}
+	int menor = num;
+	if(menor<den){
+		menor = den;
+	}
+	for (int i = 2; i < menor; i++){
+		if((num%i==0) && (den%i==0)){
+			num = num/i;
+			den = den/i;
+		}
+	}
 	return *this;
 }
 
@@ -65,6 +86,27 @@ const Racional Racional::operator-() const{
 const Racional& Racional::operator+=(const Racional& b){
    num = (num*b.den)+(b.num*den);
    den = den*b.den;
+   if(den<0 && num<0){
+		den *=-1;
+		num *= -1;
+	}
+	if(den<0){
+		num *= -1;
+		den *= -1;
+	}
+	if(den==0){
+		den =1;
+	}
+	int menor = num;
+	if(menor<den){
+		menor = den;
+	}
+	for (int i = 2; i < menor; i++){
+		if((num%i==0) && (den%i==0)){
+			num = num/i;
+			den = den/i;
+		}
+	}
    return *this;
 }
 
@@ -80,6 +122,27 @@ const Racional Racional::inversa() const{
 const Racional& Racional::operator*=(const Racional& b){
 	num= num*b.num;
     den= den*b.den;
+    if(den<0 && num<0){
+		den *=-1;
+		num *= -1;
+	}
+	if(den<0){
+		num *= -1;
+		den *= -1;
+	}
+	if(den==0){
+		den =1;
+	}
+	int menor = num;
+	if(menor<den){
+		menor = den;
+	}
+	for (int i = 2; i < menor; i++){
+		if((num%i==0) && (den%i==0)){
+			num = num/i;
+			den = den/i;
+		}
+	}
 	return *this;
 }
 
