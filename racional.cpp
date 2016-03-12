@@ -17,6 +17,7 @@ Racional::Racional(int num, int den){
 	}
 	if(den<0){
 		num *= -1;
+		den *= -1;
 	}
 	if(den==0){
 		den =1;
