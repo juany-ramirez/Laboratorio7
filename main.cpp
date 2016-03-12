@@ -2,21 +2,23 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <sstream>
 #include "racional.h"
+#include <string>
+#include <cstdlib>
 
+using std::string;
+using std::stringstream;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
-
 using std::cin;
 using std::cout;
-
 
 void imprimirMenu();
 void eliminarVector(vector<Racional*>);
 void imprimirLista(vector<Racional*>);
-Racional simplificar(int, int);
 
 int main(int argc, char const *argv[]){
 	
@@ -30,6 +32,7 @@ int main(int argc, char const *argv[]){
 	cin >> d;
 	cout << "La suma de " << a << " y " << d << " es: " << a + d << endl;
 */
+	vector<string> historial;
 	vector<Racional*> lista;
 	int opcionMenu;
 /*
@@ -38,6 +41,8 @@ int main(int argc, char const *argv[]){
 	lista.push_back(c);
 */
 	int opRacional1,opRacional2;
+	stringstream ss;//aqui se guarda el codigo del historial. primer numero tipo de operacion, segundo posicion, terceroo posicion2
+	int pos1, pos2;// esta es la conversion de char a int 
 	do{
 		imprimirMenu();
 		cin >> opcionMenu;
@@ -47,14 +52,23 @@ int main(int argc, char const *argv[]){
             cin >> numerador;
             cout<< "Ingrese el denominador: ";
             cin >> denominador;
-            lista.push_back(new Racional(simplificar(numerador,denominador)));
-        }else if(opcionMenu == 2){
+            lista.push_back(new Racional(numerador,denominador));
+        }
+/*
+        else if(opcionMenu == 2){
         	imprimirLista(lista);
         	cout<< "Ingrese el primer racional: ";
             cin >> opRacional1;
             cout<< "Ingrese el segundo racional: ";
             cin >> opRacional2;
-
+            
+            ss<<1<<opRacional1<<opRacional2;
+            historial.push_back(ss);
+            ss.str("");
+			
+            cout<< lista[opRacional1] << " + " << lista[opRacional2] << " = "; 
+            cout<< lista[opRacional1]+= lista[opRacional2]; 
+            cout<< endl;
         }else if(opcionMenu == 3){
         	imprimirLista(lista);
         	cout<< "Ingrese el primer racional: ";
@@ -62,12 +76,30 @@ int main(int argc, char const *argv[]){
             cout<< "Ingrese el segundo racional: ";
             cin >> opRacional2;
 
+            ss<<2<<opRacional1<<opRacional2;
+            historial.push_back(ss);
+            ss.str("");
+			
+            cout<< lista[opRacional1] << " - " << lista[opRacional2] << " = "; 
+            cout<< (lista[opRacional1]-= lista[opRacional2)]; 
+            cout<< endl;
+
         }else if(opcionMenu == 4){
         	imprimirLista(lista);
         	cout<< "Ingrese el primer racional: ";
             cin >> opRacional1;
             cout<< "Ingrese el segundo racional: ";
-            cin >> opRacional2;
+            cin >> opRacional2;	
+           
+            ss<<3<<opRacional1<<opRacional2;
+            historial.push_back(ss);
+            ss.str("");
+			
+
+            cout<< lista[opRacional1] << " * " << lista[opRacional2] << " = "; 
+            cout<< (lista[opRacional1]*=lista[opRacional2]); 
+            cout<< endl;
+
 
         }else if(opcionMenu == 5){
         	imprimirLista(lista);
@@ -76,15 +108,46 @@ int main(int argc, char const *argv[]){
             cout<< "Ingrese el segundo racional: ";
             cin >> opRacional2;
 
+            ss<<4<<opRacional1<<opRacional2;
+            historial.push_back(ss);
+            ss.str("");
+			
+            cout<< lista[opRacional1] << " / " << lista[opRacional2] << " = ";
+            cout << (lista[opRacional1]/= lista[opRacional2)];
+            cout<< endl;
         }else if(opcionMenu == 6){
-        	imprimirLista(lista);
-        	cout<< "Ingrese el primer racional: ";
-            cin >> opRacional1;
-            cout<< "Ingrese el segundo racional: ";
-            cin >> opRacional2;
+        	cout<< "---------------------historial---------------------"<< endl;
+			for (int i = 0; i < historial.size(); ++i){
+				cout << i+1 << ". ";
+				
+				if((historial.at(i))[0] == '1'){
+					pos1 = atoi((historial.at(i))[1]);
+					pos2 = atoi((historial.at(i))[2]);
+					cout<< lista[pos1] << " + " << lista[pos2] << " = " << lista[pos1]+= lista[pos2] << endl;
+				}
+				if((historial.at(i))[0] == '2'){
+					pos1 = atoi((historial.at(i))[1]);
+					pos2 = atoi((historial.at(i))[2]);
+					cout<< lista[pos1] << " - " << lista[pos2] << " = " << lista[pos1]-= lista[pos2] << endl;
+				}
+				if((historial.at(i))[0] == '3'){
+					pos1 = atoi((historial.at(i))[1]);
+					pos2 = atoi((historial.at(i))[2]);
+					cout<< lista[pos1] << " * " << lista[pos2] << " = " << lista[pos1]*= lista[pos2] << endl;
+				}
+				if((historial.at(i))[0] == '4'){
+					pos1 = atoi((historial.at(i))[1]);
+					pos2 = atoi((historial.at(i))[2]);
+					cout<< lista[pos1] << " / " << lista[pos2] << " = " << lista[pos1]/= lista[pos2] << endl;
+				}
+			}
 
         }
-	}while(opcionMenu!=7);
+        */if(opcionMenu == 7){
+        	imprimirLista(lista);
+
+        }
+ 	}while(opcionMenu!=8);
 	eliminarVector(lista);
 	return 0;
 }
@@ -92,8 +155,7 @@ int main(int argc, char const *argv[]){
 void imprimirLista(vector<Racional*> arreglo){
 	cout<< "---------------------RACIONALES---------------------"<< endl;
 	for (int i = 0; i < arreglo.size(); ++i){
-		//
-		cout << i+1 << ". ";
+		cout << i << ". ";
 		cout << arreglo.at(i) -> toString();
 		cout << endl;
 	}
@@ -108,7 +170,8 @@ void imprimirMenu(){
     cout<< "4. Multiplicacion de racionales"<<endl;
     cout<< "5. Division de racionales"<<endl;
     cout<< "6. Ver historial de operaciones"<<endl;
-    cout<< "7. Salir"<<endl;
+    cout<< "7. Imprimir Menu"<<endl;
+    cout<< "8. Salir"<<endl;
 
 }
 
@@ -119,27 +182,5 @@ void eliminarVector(vector<Racional*> arreglo){
 	return;
 } 
 
-
-Racional simplificar(int num, int den){
-	if(den<0){
-		num *= -1;
-	}
-	if(den<0 && num<0){
-		den *= -1;
-		num *= -1;
-	}
-	int menor = num;
-	if(menor>den){
-		menor = num;
-	}
-	for (int i = 2; i < menor; i++){
-		if(num%i==0 && den%2==0){
-			num = num/i;
-			den = den/i;
-		}
-	}
-	Racional rac(num, den);
-	return rac;
-}
 
 

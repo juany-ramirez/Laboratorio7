@@ -11,16 +11,26 @@ using std::showpos;
 using std::noshowpos;
 
 Racional::Racional(int num, int den){
+	if(den<0){
+		num *= -1;
+	}
+	if(den<0 && num<0){
+		den *=-1;
+		num *= -1;
+	}
+	int menor = num;
+	if(menor<den){
+		menor = den;
+	}
+	for (int i = 2; i < menor; i++){
+		if((num%i==0) && (den%i==0)){
+			num = num/i;
+			den = den/i;
+		}
+	}
 	this -> num = num;
-	this -> num = num;
+	this -> den = den;
 	
-}
-
-
-const Racional& Racional::operator=(const Racional& r){
-	num += r.num;
-	den += r.den;
-	return *this;
 }
 
 string Racional::toString() const{
@@ -36,19 +46,36 @@ string Racional::toString() const{
 	return ss.str();
 }
 
+const Racional& Racional::operator=(const Racional& r){
+	num = r.num;
+	den = r.den;
+	return *this;
+}
+
 
 const Racional Racional::operator-() const{
    return Racional(-num, -den);
 }
 
-const Racional& Racional::operator+(const Racional& r){
-   num + r.num;
-   den + r.den;
+const Racional& Racional::operator+=(const Racional& b){
+   num = (num*b.den)+(b.num*den);
+   den = den*b.den;
    return *this;
 }
 
-const Racional& Racional::operator-(const Racional& r){
-   return *this + -r;
+const Racional& Racional::operator-=(const Racional& r){
+   return *this += -r;
+}
+
+//return new Fraccion(a.den, a.num);
+const Racional Racional::inversa() const{
+	return Racional(den, num);
+}
+
+const Racional& Racional::operator*=(const Racional& b){
+	num= num*b.num;
+    den= den*b.den;
+	return *this;
 }
 
 ostream& operator<<(ostream& output, const Racional& c){
@@ -62,3 +89,28 @@ ostream& operator<<(ostream& output, const Racional& c){
 	}
 	return output;
 }
+
+const Racional operator+(const Racional& rd, const Racional& hp){
+	Racional retVal=rd;
+	retVal += hp;
+	return retVal;
+}
+
+const Racional operator-(const Racional& rd, const Racional& hp){
+	Racional retVal=rd;
+	retVal -= hp;
+	return retVal;
+}
+
+const Racional operator/(const Racional& rd, const Racional& hp){
+	Racional retVal=rd;
+	retVal *= hp.inversa();
+	return retVal;
+}
+
+const Racional operator*(const Racional& rd, const Racional& hp){
+	Racional retVal=rd;
+	retVal *= hp;
+	return retVal;
+}
+
